@@ -5,9 +5,8 @@
 
 using namespace std;
 
-default_random_engine dre;
 uniform_int_distribution<> uid('a', 'z');
-
+default_random_engine dre;
 
 void MemoryMonster::set(int n)
 {
@@ -30,7 +29,7 @@ MemoryMonster::MemoryMonster(int n)
 
 MemoryMonster::~MemoryMonster()
 {
-	cout << "¼Ò¸êÀÚ - " << this << endl;
+	//cout << "¼Ò¸êÀÚ - " << this << endl;
 	if (p != nullptr)
 		delete[] p;
 }
@@ -53,21 +52,21 @@ MemoryMonster& MemoryMonster::operator=(const MemoryMonster& other)
 	return *this;
 }
 
-MemoryMonster::MemoryMonster(MemoryMonster&& other)
+MemoryMonster::MemoryMonster(MemoryMonster&& other) : num(other.num)
 {
 	p = other.p;
 	other.p = nullptr;
 	other.num = 0;
 }
 
-MemoryMonster* MemoryMonster::operator=(MemoryMonster&& other)
+MemoryMonster& MemoryMonster::operator=(MemoryMonster&& other)
 {
 	delete[] p;
 	num = other.num;
 	p = other.p;
 	other.p = nullptr;
 	other.num = 0;
-	return this;
+	return *this;
 }
 
 int MemoryMonster::get() const
@@ -80,7 +79,7 @@ ostream& operator<<(ostream& os, const MemoryMonster& mm)
 {
 	for (int i = 0; i < mm.num; ++i)
 	{
-		os << static_cast<int>(mm.p[i]) << ' ';
+		os << mm.p[i] << ' ';
 	}
 	return os;
 }

@@ -24,17 +24,17 @@ public:
 
 	MemoryMonster() = default;
 
-	MemoryMonster(int n);
+	MemoryMonster(int );
 
 	~MemoryMonster();
 
-	MemoryMonster(const MemoryMonster& other);
+	MemoryMonster(const MemoryMonster& );
 
-	MemoryMonster& operator=(const MemoryMonster& other);
+	MemoryMonster& operator=(const MemoryMonster& );
 
-	MemoryMonster(MemoryMonster&& other);
+	MemoryMonster(MemoryMonster&& );
 
-	MemoryMonster* operator=(MemoryMonster&& other);
+	MemoryMonster& operator=(MemoryMonster&& );
 
 
 	friend ostream& operator<<(ostream&, const MemoryMonster&);
