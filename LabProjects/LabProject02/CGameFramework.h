@@ -2,6 +2,7 @@
 class CGameFramework
 {
 private:
+	HRESULT hResult;
 	HINSTANCE m_hInstance;
 	HWND m_hWnd;
 
@@ -64,9 +65,12 @@ public:
 	//프레임워크를 초기화하는 함수이다(주 윈도우가 생성되면 호출된다).
 
 	void OnDestroy();
+
 	void CreateSwapChain();
 	void CreateDirect3DDevice();
 	void CreateRtvAndDsvDescriptorHeaps();
+	void CreateRenderTargetView();
+	void CreateDepthStencilView();
 	void CreateCommandQueueAndList();
 	//스왑 체인, 디바이스, 서술자 힙, 명령 큐/할당자/리스트를 생성하는 함수이다.
 	void BuildObjects();

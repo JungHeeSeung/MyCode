@@ -34,7 +34,9 @@
 
 using namespace DirectX;
 using namespace DirectX::PackedVector;
-using Microsoft::WRL::ComPtr;#define FRAME_BUFFER_WIDTH 640
+using Microsoft::WRL::ComPtr;
+
+#define FRAME_BUFFER_WIDTH 640
 #define FRAME_BUFFER_HEIGHT 480
 
 #pragma comment(lib, "d3dcompiler.lib")
