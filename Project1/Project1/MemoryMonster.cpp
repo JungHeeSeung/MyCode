@@ -18,7 +18,7 @@ void MemoryMonster::set(int n)
 	}
 }
 
-MemoryMonster::MemoryMonster(int n)
+MemoryMonster::MemoryMonster(int n) : num(n)
 {
 	p = new char[num];
 	for (int i = 0; i < num; ++i)
@@ -34,7 +34,7 @@ MemoryMonster::~MemoryMonster()
 		delete[] p;
 }
 
-MemoryMonster::MemoryMonster(const MemoryMonster& other)
+MemoryMonster::MemoryMonster(const MemoryMonster& other) : num(other.num)
 {
 	p = new char[num];
 	memcpy(p, other.p, num);
@@ -79,7 +79,7 @@ ostream& operator<<(ostream& os, const MemoryMonster& mm)
 {
 	for (int i = 0; i < mm.num; ++i)
 	{
-		os << mm.p[i] << ' ';
+		os << mm.p[i] ;
 	}
 	return os;
 }
