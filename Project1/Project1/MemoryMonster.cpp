@@ -16,6 +16,7 @@ void MemoryMonster::set(int n)
 	{
 		p[i] = uid(dre);
 	}
+	cout << "持失切 - " << this << endl;
 }
 
 MemoryMonster::MemoryMonster(int n) : num(n)
@@ -29,7 +30,7 @@ MemoryMonster::MemoryMonster(int n) : num(n)
 
 MemoryMonster::~MemoryMonster()
 {
-	//cout << "社瑚切 - " << this << endl;
+	cout << "社瑚切 - " << this << endl;
 	if (p != nullptr)
 		delete[] p;
 }
@@ -67,6 +68,11 @@ MemoryMonster& MemoryMonster::operator=(MemoryMonster&& other)
 	other.p = nullptr;
 	other.num = 0;
 	return *this;
+}
+
+bool MemoryMonster::operator<(const MemoryMonster& right)
+{
+	return num < right.num;
 }
 
 int MemoryMonster::get() const

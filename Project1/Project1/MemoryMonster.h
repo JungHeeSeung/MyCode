@@ -35,7 +35,8 @@ public:
 	MemoryMonster(MemoryMonster&& );
 
 	MemoryMonster& operator=(MemoryMonster&& );
-
+	
+	bool operator<(const MemoryMonster& right);
 
 	friend ostream& operator<<(ostream&, const MemoryMonster&);
 
