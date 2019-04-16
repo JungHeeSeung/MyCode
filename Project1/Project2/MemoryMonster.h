@@ -30,8 +30,8 @@ public:
 	MemoryMonster(const MemoryMonster& other);
 	//복사할당연산자
 	MemoryMonster& operator=(const MemoryMonster& other);
-
-
+	
+	
 	//이동================================
 	//이동생성자
 	MemoryMonster(MemoryMonster&& other);

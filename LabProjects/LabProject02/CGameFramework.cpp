@@ -7,21 +7,26 @@ CGameFramework::CGameFramework()
 	m_pdxgiFactory = NULL;
 	m_pdxgiSwapChain = NULL;
 	m_pd3dDevice = NULL;
+
 	m_pd3dCommandAllocator = NULL;
 	m_pd3dCommandQueue = NULL;
 	m_pd3dPipelineState = NULL;
 	m_pd3dCommandList = NULL;
-	for (int i = 0; i < m_nSwapChainBuffers; i++)
-		m_ppd3dRenderTargetBuffers[i] = NULL;
+
+	for (int i = 0; i < m_nSwapChainBuffers; i++) m_ppd3dRenderTargetBuffers[i] = NULL;
 	m_pd3dRtvDescriptorHeap = NULL;
 	m_nRtvDescriptorIncrementSize = 0;
+
 	m_pd3dDepthStencilBuffer = NULL;
 	m_pd3dDsvDescriptorHeap = NULL;
 	m_nDsvDescriptorIncrementSize = 0;
+
 	m_nSwapChainBufferIndex = 0;
+
 	m_hFenceEvent = NULL;
 	m_pd3dFence = NULL;
 	m_nFenceValue = 0;
+
 	m_nWndClientWidth = FRAME_BUFFER_WIDTH;
 	m_nWndClientHeight = FRAME_BUFFER_HEIGHT;
 }
@@ -35,6 +40,7 @@ bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
 {
 	m_hInstance = hInstance;
 	m_hWnd = hMainWnd;
+
 	//Direct3D 디바이스, 명령 큐와 명령 리스트, 스왑 체인 등을 생성하는 함수를 호출한다.
 	CreateDirect3DDevice();
 	CreateCommandQueueAndList();
@@ -42,6 +48,7 @@ bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
 	CreateRtvAndDsvDescriptorHeaps();
 	CreateRenderTargetView();
 	CreateDepthStencilView();
+
 	BuildObjects();
 	//렌더링할 객체(게임 월드 객체)를 생성한다. 
 	return(true);
@@ -50,12 +57,15 @@ bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
 void CGameFramework::OnDestroy()
 {
 	ReleaseObjects();
+
 	::CloseHandle(m_hFenceEvent);
+
 #if defined(_DEBUG)
 	if (m_pd3dDebugController) m_pd3dDebugController->Release();
 #endif
+
 	for (int i = 0; i < m_nSwapChainBuffers; i++) if (m_ppd3dRenderTargetBuffers[i])
-		m_ppd3dRenderTargetBuffers[i]->Release();
+m_ppd3dRenderTargetBuffers[i]->Release();
 	if (m_pd3dRtvDescriptorHeap) m_pd3dRtvDescriptorHeap->Release();
 
 	if (m_pd3dDepthStencilBuffer) m_pd3dDepthStencilBuffer->Release();
@@ -133,6 +143,7 @@ void CGameFramework::CreateDirect3DDevice()
 		if (SUCCEEDED(D3D12CreateDevice(pd3dAdapter, D3D_FEATURE_LEVEL_12_0,
 			_uuidof(ID3D12Device), (void **)&m_pd3dDevice))) break;
 	}
+
 	//모든 하드웨어 어댑터 대하여 특성 레벨 12.0을 지원하는 하드웨어 디바이스를 생성한다. 
 	if (!pd3dAdapter)
 	{
@@ -141,6 +152,7 @@ void CGameFramework::CreateDirect3DDevice()
 			**)&m_pd3dDevice);
 	}
 	//특성 레벨 12.0을 지원하는 하드웨어 디바이스를 생성할 수 없으면 WARP 디바이스를 생성한다. 
+
 	D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS d3dMsaaQualityLevels;
 	d3dMsaaQualityLevels.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	d3dMsaaQualityLevels.SampleCount = 4; //Msaa4x 다중 샘플링
@@ -184,11 +196,11 @@ void CGameFramework::CreateRtvAndDsvDescriptorHeaps()
 	d3dDescriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 	d3dDescriptorHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 	d3dDescriptorHeapDesc.NodeMask = 0;
-	HRESULT hResult = m_pd3dDevice->CreateDescriptorHeap(&d3dDescriptorHeapDesc,
+	HRESULT hResult = m_pd3dDevice->CreateDescriptorHeap(&d3dDescriptorHeapDesc, 
 		__uuidof(ID3D12DescriptorHeap), (void **)&m_pd3dRtvDescriptorHeap);
 	//렌더 타겟 서술자 힙(서술자의 개수는 스왑체인 버퍼의 개수)을 생성한다.
-	m_nRtvDescriptorIncrementSize =
-	m_pd3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	m_nRtvDescriptorIncrementSize = 
+		m_pd3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 	//렌더 타겟 서술자 힙의 원소의 크기를 저장한다.
 	
 	d3dDescriptorHeapDesc.NumDescriptors = 1;
@@ -197,7 +209,7 @@ void CGameFramework::CreateRtvAndDsvDescriptorHeaps()
 		__uuidof(ID3D12DescriptorHeap), (void **)&m_pd3dDsvDescriptorHeap);
 	//깊이-스텐실 서술자 힙(서술자의 개수는 1)을 생성한다.
 	m_nDsvDescriptorIncrementSize =
-	m_pd3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
+		m_pd3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 	//깊이-스텐실 서술자 힙의 원소의 크기를 저장한다.
 }
 
@@ -207,13 +219,10 @@ void CGameFramework::CreateRenderTargetView()
 		m_pd3dRtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 	for (UINT i = 0; i < m_nSwapChainBuffers; i++)
 	{
-		hResult = m_pdxgiSwapChain->GetBuffer(i, __uuidof(ID3D12Resource), (void
-			**)&m_ppd3dRenderTargetBuffers[i]);
-		m_pd3dDevice->CreateRenderTargetView(m_ppd3dRenderTargetBuffers[i], NULL,
-			d3dRtvCPUDescriptorHandle);
+		HRESULT hResult = m_pdxgiSwapChain->GetBuffer(i, __uuidof(ID3D12Resource), (void**)&m_ppd3dRenderTargetBuffers[i]);
+		m_pd3dDevice->CreateRenderTargetView(m_ppd3dRenderTargetBuffers[i], NULL, d3dRtvCPUDescriptorHandle);
 		d3dRtvCPUDescriptorHandle.ptr += m_nRtvDescriptorIncrementSize;
 	}
-
 }
 
 void CGameFramework::CreateDepthStencilView()
@@ -227,8 +236,7 @@ void CGameFramework::CreateDepthStencilView()
 	d3dResourceDesc.MipLevels = 1;
 	d3dResourceDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	d3dResourceDesc.SampleDesc.Count = (m_bMsaa4xEnable) ? 4 : 1;
-	d3dResourceDesc.SampleDesc.Quality = (m_bMsaa4xEnable) ? (m_nMsaa4xQualityLevels - 1)
-		: 0;
+	d3dResourceDesc.SampleDesc.Quality = (m_bMsaa4xEnable) ? (m_nMsaa4xQualityLevels - 1) : 0;
 	d3dResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
 	d3dResourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
@@ -250,7 +258,7 @@ void CGameFramework::CreateDepthStencilView()
 	//깊이-스텐실 버퍼를 생성한다. 
 	
 	D3D12_CPU_DESCRIPTOR_HANDLE d3dDsvCPUDescriptorHandle =
-	m_pd3dDsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+		m_pd3dDsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 	m_pd3dDevice->CreateDepthStencilView(m_pd3dDepthStencilBuffer, NULL,
 		d3dDsvCPUDescriptorHandle);
 	//깊이-스텐실 버퍼 뷰를 생성한다. 
@@ -324,7 +332,7 @@ void CGameFramework::FrameAdvance()
 	//뷰포트와 씨저 사각형을 설정한다. 
 	
 	D3D12_CPU_DESCRIPTOR_HANDLE d3dRtvCPUDescriptorHandle =
-	m_pd3dRtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+		m_pd3dRtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 	d3dRtvCPUDescriptorHandle.ptr += (m_nSwapChainBufferIndex *
 		m_nRtvDescriptorIncrementSize);
 	//현재의 렌더 타겟에 해당하는 서술자의 CPU 주소(핸들)를 계산한다. 
@@ -335,7 +343,7 @@ void CGameFramework::FrameAdvance()
 	//원하는 색상으로 렌더 타겟(뷰)을 지운다.
 	
 	D3D12_CPU_DESCRIPTOR_HANDLE d3dDsvCPUDescriptorHandle =
-	m_pd3dDsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+		m_pd3dDsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 	//깊이-스텐실 서술자의 CPU 주소를 계산한다. 
 	m_pd3dCommandList->ClearDepthStencilView(d3dDsvCPUDescriptorHandle,
 	D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, NULL);
@@ -346,6 +354,7 @@ void CGameFramework::FrameAdvance()
 	//렌더 타겟 뷰(서술자)와 깊이-스텐실 뷰(서술자)를 출력-병합 단계(OM)에 연결한다. 
 	
 	//렌더링 코드는 여기에 추가될 것이다. 
+
 	d3dResourceBarrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
 	d3dResourceBarrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
 	d3dResourceBarrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;

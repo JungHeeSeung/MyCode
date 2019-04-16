@@ -1,7 +1,7 @@
 #include "MemoryMonster.h"
 
 #include<random>	// cpp에 적으면 헤더재정의 할 필요가 없어서 빨라진다
-
+	
 std::default_random_engine dre;
 std::uniform_int_distribution<> uid('a', 'z');
 
@@ -12,13 +12,13 @@ MemoryMonster::MemoryMonster(int n) : num{ n }
 	p = new char[num];	// 메모리
 	for (int i = 0; i < num; i++)
 		p[i] = uid(dre);
-	//std::cout << "생성자(int) - " << this << ", 할당 메모리 - " << (void*)p << std::endl;
+	std::cout << "생성자(int) - " << this << ", 할당 메모리 - " << (void*)p <<std::endl;
 }
 
 
 MemoryMonster::~MemoryMonster()
 {
-	//std::cout << "소멸자 - " << this << ", 할당 메모리 - " << (void*)p << std::endl;
+	std::cout << "소멸자 - " << this << ", 할당 메모리 - " << (void*)p << std::endl;
 	//std::cout << "소멸자: " << this << std::endl;
 	if (p != nullptr)
 		delete[] p;
@@ -30,13 +30,13 @@ MemoryMonster::~MemoryMonster()
 MemoryMonster::MemoryMonster(const MemoryMonster& other) : num(other.num) {
 	p = new char[num];
 	memcpy(p, other.p, num);
-	/*std::cout << "복사생성자 - " << this
-		<< " 원본 - " << &other << ", 할당 메모리 - " << (void*)p << std::endl;*/
+	std::cout << "복사생성자 - " << this 
+		<< " 원본 - "<< &other << ", 할당 메모리 - " << (void*)p << std::endl;
 }
 
 //복사할당연산자
 MemoryMonster& MemoryMonster::operator=(const MemoryMonster& other) {
-	/*std::cout << "복사할당 연산자" << std::endl;*/
+	std::cout << "복사할당 연산자" << std::endl;
 	if (this == &other)
 		return *this;
 	delete[] p;
@@ -53,13 +53,13 @@ MemoryMonster::MemoryMonster(MemoryMonster&& other) : num{ other.num } {
 	p = other.p;
 	other.p = nullptr;
 	other.num = 0;
-	/*std::cout << "이동생성자 - " << this
-		<< " 원본 - " << &other << ", 할당 메모리 - " << (void*)p << std::endl;*/
+	std::cout << "이동생성자 - " << this
+		<< " 원본 - " << &other << ", 할당 메모리 - " << (void*)p << std::endl;
 }
 
 //이동할당연산자
 MemoryMonster& MemoryMonster::operator=(MemoryMonster&& other) {
-	/*std::cout << "이동할당 연산자" << std::endl;*/
+	std::cout << "이동할당 연산자" << std::endl;
 	delete[] p;
 	num = other.num;
 	p = other.p;
