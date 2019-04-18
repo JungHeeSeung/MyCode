@@ -46,6 +46,7 @@
 #include <iostream>
 #include <algorithm>
 #include <list>
+#include <string>
 #include <iterator>
 #include <vector>
 #include "MemoryMonster.h"
@@ -67,8 +68,10 @@ int main()
 	copy(istream_iterator<string>(cin), istream_iterator<string>(),
 		back_inserter(v));
 
+	
 	for (auto i = v.crbegin(); i < v.crend(); ++i)
 		cout << *i << endl;
+
 	//vector<int> v{ 1, 2, 3, 4, 5 };
 	//vector<int> w;
 	//myCopy(v.begin(), v.end(), back_inserter(w));		// 이런 식으로 집어넣자
