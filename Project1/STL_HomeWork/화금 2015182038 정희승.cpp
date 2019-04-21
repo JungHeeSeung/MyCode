@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <iomanip>
 #include <iterator>
 #include <fstream>
 #include <deque>
@@ -58,7 +59,7 @@ int main()
 			print_number(result);
 			break;
 		case 2:
-			cout << "첫번째 정수가 들어있는 파일을 입력하세요" << endl;
+			cout << "첫번째 정수가 들어있는 파일을 입력하세요(.txt): ";
 			getline(cin, remainder);
 			getline(cin, fname);
 			temp = fopen_insert(fname);
@@ -68,7 +69,7 @@ int main()
 			}
 			op1 = insert(temp, step);
 			
-			cout << "두번째 정수가 들어있는 파일을 입력하세요" << endl;
+			cout << "두번째 정수가 들어있는 파일을 입력하세요(.txt): ";
 			getline(cin, fname2);
 			temp = fopen_insert(fname2);
 			if (temp == "fail")
@@ -90,9 +91,16 @@ int main()
 
 			// 저장할 파일 이름을 op1+op2.txt 로 열고
 			out.open(fname + " + " + fname2 + ".txt");
-			for (auto i : result) // result 값들을 파일 안에 넣고
+			for (auto i = result.cbegin(); i != result.cend(); ++i)
 			{
-				out << i;
+				if (i == result.cbegin())
+				{
+					out << *i;
+				}
+				else
+				{
+					out << setfill('0') << setw(5) << *i;
+				}
 			}
 			out.close();
 			cout << "저장이 완료 되었습니다." << endl << endl;
@@ -206,17 +214,21 @@ deque<int> insert(const string & in, const int& step)
 void print_number(const deque<int>& result)
 {
 	cout << '=' << '\t';
-	for (auto d : result)
+	for (auto i= result.cbegin(); i != result.cend(); ++i)
 	{
-		if (d != 0)
+		if (i == result.cbegin())	
 		{
-			cout << d;
+			// result 원소가 1개밖에 없을때 0이면 00000을 출력하면 안되서 넣었습니다
+			cout << *i;
 		}
-		else // 원소가 0이라면 
+		else
 		{
-			cout << "00000";
+			// 원소가 00100 일 경우 100으로 출력해서 문제가 생겼었습니다
+			// 그런 문제를 방지하기 위해 5칸의 공간을 잡고 빈칸을 0으로 채웠습니다
+			cout << setfill('0') << setw(5) << *i;
 		}
 	}
+	cout << setfill(' ');
 	cout << endl << endl;
 }
 
