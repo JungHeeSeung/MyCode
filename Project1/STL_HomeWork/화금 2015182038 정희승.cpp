@@ -31,9 +31,11 @@ int main()
 	while (1)
 	{
 		cout << "정수 덧셈 프로그램입니다." << endl;
+		cout << "===========================" << endl;
 		cout << "1과 2로 모드를 입력하세요." << endl;
 		cout << "1: 사용자로부터 정수 입력" << endl;
 		cout << "2: 파일로부터 정수 입력" << endl;
+		cout << "===========================" << endl;
 		cin >> mode;
 		switch (mode)
 		{
@@ -59,7 +61,7 @@ int main()
 			print_number(result);
 			break;
 		case 2:
-			cout << "첫번째 정수가 들어있는 파일을 입력하세요(.txt): ";
+			cout << "첫번째 정수가 들어있는 파일을 입력하세요: ";
 			getline(cin, remainder);
 			getline(cin, fname);
 			temp = fopen_insert(fname);
@@ -69,7 +71,7 @@ int main()
 			}
 			op1 = insert(temp, step);
 			
-			cout << "두번째 정수가 들어있는 파일을 입력하세요(.txt): ";
+			cout << "두번째 정수가 들어있는 파일을 입력하세요: ";
 			getline(cin, fname2);
 			temp = fopen_insert(fname2);
 			if (temp == "fail")
@@ -89,7 +91,7 @@ int main()
 			}
 
 
-			// 저장할 파일 이름을 op1+op2.txt 로 열고
+			// 저장할 파일 이름을 op1+op2.txt 로 
 			out.open(fname + " + " + fname2 + ".txt");
 			for (auto i = result.cbegin(); i != result.cend(); ++i)
 			{
@@ -109,7 +111,8 @@ int main()
 			cout << "1과 2로만 입력하세요" << endl;
 			break;
 		}
-	
+
+		// 한 번 쓴 덱들을 다 지운다
 		cout << endl << endl;
 		result.clear();
 		op1.clear();
@@ -245,10 +248,10 @@ string fopen_insert(string& fname)
 	}
 	else
 	{
-		in >> temp;
+		in >> temp;		// 파일 안의 정수를 추가
 		in.close();
-		n = fname.find(".txt");
-		fname = fname.substr(0, n);
+		n = fname.find(".");	// 파일 이름의 . 위치를  찾아서
+		fname = fname.substr(0, n);	// . 전까지 파일 이름을 추출한다
 	}
 	return temp;
 }
