@@ -5,6 +5,7 @@
 #include <fstream>
 #include <deque>
 
+
 using namespace std;
 
 deque<int> calc(const deque<int>&, const deque<int>&, const int);
