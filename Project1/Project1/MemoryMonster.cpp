@@ -105,3 +105,8 @@ char * MemoryMonster::getData() const
 {
 	return p;
 }
+
+bool MemoryMonster::operator< (const MemoryMonster& rhs) const
+{
+	return num < rhs.num;
+}

@@ -40,6 +40,7 @@ public:
 
 	friend std::ostream& operator<<(std::ostream&, const MemoryMonster&);
 	bool operator == (const MemoryMonster& rhs);
+	bool operator< (const MemoryMonster& rhs) const;
 private:
 	int num{ 0 };
 	char* p{ nullptr };
