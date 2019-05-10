@@ -50,3 +50,12 @@ public:
 	CTerrainPlayer() { }
 	virtual ~CTerrainPlayer() { }
 };
+
+class KTXPlayer : public CPlayer
+{
+public:
+	KTXPlayer() {}
+	virtual ~KTXPlayer() {}
+
+};
+

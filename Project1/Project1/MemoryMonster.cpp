@@ -68,9 +68,9 @@ MemoryMonster& MemoryMonster::operator=(MemoryMonster&& other) {
 	return *this;
 }
 
-bool MemoryMonster::operator==(const MemoryMonster & rhs)
+bool MemoryMonster::operator==(const MemoryMonster & rhs) const
 {
-	if (num == rhs.num)
+	if (std::string(p) == std::string(rhs.p))
 		return true;
 	return false;
 }

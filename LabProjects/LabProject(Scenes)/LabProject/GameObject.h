@@ -116,4 +116,12 @@ public:
 	virtual void Animate(float fElapsedTime);
 };
 
+class KorailObject : public CGameObject
+{
+public:
+	KorailObject(CGameObject *m_pPlayer);
+	virtual ~KorailObject();
+
+};
+
 

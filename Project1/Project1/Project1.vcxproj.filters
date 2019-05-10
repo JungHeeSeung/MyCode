@@ -51,7 +51,13 @@
     <ClCompile Include="STL_4.30.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="다음에 할 꺼.cpp">
+    <ClCompile Include="STL_5.3.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="STL_5.7+%40.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="소스.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

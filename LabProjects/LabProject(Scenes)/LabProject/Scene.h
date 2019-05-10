@@ -78,3 +78,14 @@ public:
 	virtual void Animate(float fElapsedTime);
 	virtual void Render(HDC hDCFrameBuffer, CCamera *pCamera);
 };
+
+class RolerCosterScene : public CScene
+{
+public:
+	RolerCosterScene();
+	virtual ~RolerCosterScene();
+
+	virtual void BuildObjects();
+	virtual void ReleaseObjects();
+
+};

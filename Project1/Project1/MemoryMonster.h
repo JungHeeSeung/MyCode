@@ -8,6 +8,7 @@
 #pragma once
 
 #include<iostream>
+#include <string>
 
 class MemoryMonster
 {
@@ -39,7 +40,7 @@ public:
 	MemoryMonster& operator=(MemoryMonster&& other);
 
 	friend std::ostream& operator<<(std::ostream&, const MemoryMonster&);
-	bool operator == (const MemoryMonster& rhs);
+	bool operator == (const MemoryMonster& rhs) const;
 	bool operator< (const MemoryMonster& rhs) const;
 private:
 	int num{ 0 };

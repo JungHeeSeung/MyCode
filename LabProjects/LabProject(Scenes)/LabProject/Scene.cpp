@@ -635,3 +635,34 @@ void CRunAwayScene::Render(HDC hDCFrameBuffer, CCamera *pCamera)
 
 	CScene::Render(hDCFrameBuffer, pCamera);
 }
+
+RolerCosterScene::RolerCosterScene()
+{
+}
+
+RolerCosterScene::~RolerCosterScene()
+{
+}
+
+void RolerCosterScene::BuildObjects()
+{
+	m_nObjects = 10;
+	m_ppObjects = new CGameObject*[m_nObjects];
+
+	Korail *pObjectKorailMesh = new Korail(4.0f, 4.0f, 4.0f);
+
+	for (int i = 0; i < m_nObjects; i++)
+	{
+		m_ppObjects[i] = new KorailObject(m_pPlayer);
+		m_ppObjects[i]->SetMesh(pObjectKorailMesh);
+		m_ppObjects[i]->SetColor(RGB(0, 0, 255));
+		m_ppObjects[i]->SetMovingDirection(XMFLOAT3(0.0f, 0.0f, 1.0f));
+		m_ppObjects[i]->SetMovingSpeed(2.0f);
+	}
+}
+
+void RolerCosterScene::ReleaseObjects()
+{
+	CScene::ReleaseObjects();
+
+}

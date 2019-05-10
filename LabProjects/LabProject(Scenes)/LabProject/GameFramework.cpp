@@ -89,6 +89,25 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				case VK_ESCAPE:
 					::PostQuitMessage(0);
 					break;
+				case 'M':
+					if (m_pScene)
+					{
+						m_pScene->ReleaseObjects();
+						delete m_pScene;
+					}
+					m_pScene = new RolerCosterScene();
+					{
+						CCubeMesh *pCubeMesh = new CCubeMesh(4.0f, 4.0f, 4.0f);
+						m_pPlayer = new KTXPlayer();
+						m_pPlayer->SetPosition(0.0f, 0.0f, 0.0f);
+						m_pPlayer->SetMesh(pCubeMesh);
+						m_pPlayer->SetColor(RGB(255, 0, 0));
+						m_pPlayer->SetMesh(pCubeMesh);
+						m_pPlayer->SetCameraOffset(XMFLOAT3(0.0f, 30.0f, -15.0f));
+					}
+					m_pScene->m_pPlayer = m_pPlayer;
+					m_pScene->BuildObjects();
+					break;
 				case 'S':
 				{
 					if (m_pScene)

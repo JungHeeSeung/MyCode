@@ -79,4 +79,16 @@ public:
 	virtual ~CTerrainMesh();
 };
 
+class Korail : public CMesh
+{
+public:
+	Korail(float fWidth = 30.0f, float fHeight = 10.0f, float fDepth = 4.0f);
+	virtual ~Korail();
+};
 
+class KTX : public CMesh
+{
+public:
+	KTX(float fWidth = 4.0f, float fHeight = 4.0f, float fDepth = 4.0f);
+	virtual ~KTX();
+};

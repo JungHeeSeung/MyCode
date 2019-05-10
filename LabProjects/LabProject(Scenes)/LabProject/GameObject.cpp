@@ -276,3 +276,6 @@ void CFollowerObject::Animate(float fElapsedTime)
 //	CGameObject::Animate(fElapsedTime);
 }
 
+KorailObject::KorailObject(CGameObject * m_pPlayer)
+{
+}
