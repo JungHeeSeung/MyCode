@@ -110,3 +110,23 @@ bool MemoryMonster::operator< (const MemoryMonster& rhs) const
 {
 	return num < rhs.num;
 }
+
+typename MemoryMonster::iterator MemoryMonster::begin()
+{
+	return p;
+}
+
+typename MemoryMonster::iterator MemoryMonster::end()
+{
+	return p + num;
+}
+
+typename MemoryMonster::reverse_iterator MemoryMonster::rbegin()
+{
+	return revIter(end());
+}
+
+typename MemoryMonster::reverse_iterator MemoryMonster::rend()
+{
+	return revIter(begin());
+}

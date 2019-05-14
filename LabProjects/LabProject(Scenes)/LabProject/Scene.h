@@ -26,66 +26,39 @@ public:
 	virtual void OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
 };
 
-class CPlayerScene : public CScene
-{
-public:
-	CPlayerScene();
-	virtual ~CPlayerScene();
-
-	virtual void BuildObjects();
-};
-
-class CCollisionScene : public CScene
-{
-public:
-	CCollisionScene();
-	virtual ~CCollisionScene();
-
-	CWallsObject				*m_pWallsObject = NULL;
-
-	virtual void BuildObjects();
-	virtual void ReleaseObjects();
-
-	void CheckObjectByWallCollisions();
-
-	virtual void Animate(float fElapsedTime);
-	virtual void Render(HDC hDCFrameBuffer, CCamera *pCamera);
-};
-
-class CExplosionScene : public CCollisionScene
-{
-public:
-	CExplosionScene();
-	virtual ~CExplosionScene();
-
-	virtual void BuildObjects();
-	virtual void ReleaseObjects();
-
-	virtual void OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
-};
-
-class CRunAwayScene : public CScene
-{
-public:
-	CRunAwayScene();
-	virtual ~CRunAwayScene();
-
-	CTerrainObject				*m_pTerrainObject = NULL;
-
-	virtual void BuildObjects();
-	virtual void ReleaseObjects();
-
-	virtual void Animate(float fElapsedTime);
-	virtual void Render(HDC hDCFrameBuffer, CCamera *pCamera);
-};
-
 class RolerCosterScene : public CScene
 {
+public:
+	int m_UpDown = DEFAULT;
+	int m_LeftRight = DEFAULT;
+
+	int m_KorailCount = 0;
+	int m_Target = 0;
+
+	float m_RotateSpeed = 0.5f;
+	float m_MovingSpeed = 30.0f;
+
+	float m_PlayerTimer = 0.0f;
+	float m_KorailTimer = 0.0f;
+	float m_RoateTimer[4]{ 0.0f };
+
+	CGameObject * m_KorailMaker;
+
+	enum {
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+		DEFAULT
+	};
 public:
 	RolerCosterScene();
 	virtual ~RolerCosterScene();
 
 	virtual void BuildObjects();
-	virtual void ReleaseObjects();
 
+	void OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
+	
+	virtual void Animate(float fElapsedTime);
+	virtual void Render(HDC hDCFrameBuffer, CCamera *pCamera);
 };

@@ -29,6 +29,13 @@ void CPlayer::SetPosition(float x, float y, float z)
 	CGameObject::SetPosition(x, y, z);
 }
 
+void CPlayer::SetPosition(XMFLOAT3 & xmf3Position)
+{
+	m_xmf4x4World._41 = xmf3Position.x;
+	m_xmf4x4World._42 = xmf3Position.y;		
+	m_xmf4x4World._43 = xmf3Position.z;
+}
+
 void CPlayer::SetCameraOffset(XMFLOAT3& xmf3CameraOffset)
 {
 	m_xmf3CameraOffset = xmf3CameraOffset;
@@ -56,7 +63,7 @@ void CPlayer::Move(XMFLOAT3& xmf3Shift, bool bUpdateVelocity)
 {
 	if (bUpdateVelocity)
 	{
-		m_xmf3Velocity = Vector3::Add(m_xmf3Velocity, xmf3Shift);
+		m_xmf3Velocity = Vector3::Add(XMFLOAT3(0, 0, 0), xmf3Shift);
 	}
 	else
 	{
@@ -123,10 +130,4 @@ void CPlayer::Render(HDC hDCFrameBuffer, CCamera *pCamera)
 {
 	OnPreRender();
 	CGameObject::Render(hDCFrameBuffer, pCamera);
-}
-
-void CAirplanePlayer::OnPreRender()
-{
-	CPlayer::OnPreRender();
-	m_xmf4x4World = Matrix4x4::Multiply(XMMatrixRotationRollPitchYaw(XMConvertToRadians(90.0f), 0.0f, 0.0f), m_xmf4x4World);
 }

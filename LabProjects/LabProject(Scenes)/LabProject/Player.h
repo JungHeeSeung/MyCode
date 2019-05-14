@@ -24,6 +24,7 @@ public:
 	CCamera						*m_pCamera = NULL;
 
 	void SetPosition(float x, float y, float z);
+	void SetPosition(XMFLOAT3& xmf3Position);
 	void Move(DWORD dwDirection, float fDistance);
 	void Move(XMFLOAT3& xmf3Shift, bool bUpdateVelocity);
 	void Move(float x, float y, float z);
@@ -34,28 +35,3 @@ public:
 	virtual void OnPreRender();
 	virtual void Render(HDC hDCFrameBuffer, CCamera *pCamera);
 };
-
-class CAirplanePlayer : public CPlayer
-{
-public:
-	CAirplanePlayer() { }
-	virtual ~CAirplanePlayer() { }
-
-	virtual void OnPreRender();
-};
-
-class CTerrainPlayer : public CPlayer
-{
-public:
-	CTerrainPlayer() { }
-	virtual ~CTerrainPlayer() { }
-};
-
-class KTXPlayer : public CPlayer
-{
-public:
-	KTXPlayer() {}
-	virtual ~KTXPlayer() {}
-
-};
-
