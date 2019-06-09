@@ -1,4 +1,6 @@
 #pragma once
+#include "Timer.h"
+
 class CGameFramework
 {
 private:
@@ -47,6 +49,13 @@ private:
 	UINT64 m_nFenceValue;
 	HANDLE m_hFenceEvent;
 	//펜스 인터페이스 포인터, 펜스의 값, 이벤트 핸들이다. 
+
+	CGameTimer m_GameTimer;
+	// 게임 프레임워크에서 사용할 타이머이다.
+
+	_TCHAR m_pszFrameRate[50];
+	// 다음은 프레임 레이트를 주 윈도우의 캡션에 출력하기 위한 문자열이다.
+
 
 #if defined(_DEBUG)
 	ID3D12Debug *m_pd3dDebugController;

@@ -31,6 +31,7 @@
 #include <DirectXPackedVector.h>
 #include <DirectXColors.h>
 #include <DirectXCollision.h>
+#include <mmsystem.h>
 
 using namespace DirectX;
 using namespace DirectX::PackedVector;
@@ -42,3 +43,4 @@ using Microsoft::WRL::ComPtr;
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
+#pragma comment(lib, "winmm.lib")
